@@ -1,8 +1,10 @@
-import { getData } from "./ui/actions";
+import { getData } from "./actions";
 import { Product } from "./models/product.model";
+import { Query } from "./models/query.model";
 
-export default async function Home() {
-  const products = await getData()
+export default async function Home({ searchParams }: { searchParams: Query }) {
+  const query = await searchParams;
+  const products = await getData(query);
   return (
     <main>
       <div className="container">
@@ -55,9 +57,9 @@ export default async function Home() {
                       key={product.title}
                     >
                       <div className="card" data-key={product.id}>
-                        {product.sale
-                          ? <div className="card-sale">🔥Hot Sale🔥</div>
-                          : null}
+                        {product.sale ? (
+                          <div className="card-sale">🔥Hot Sale🔥</div>
+                        ) : null}
                         <div className="card-img-wrapper">
                           <span
                             className="card-img-top"
@@ -82,5 +84,3 @@ export default async function Home() {
     </main>
   );
 }
-
-
