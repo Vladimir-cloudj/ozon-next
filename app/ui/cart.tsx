@@ -3,7 +3,7 @@
 import { useCart } from "../providers/CartProvider";
 
 export default function Cart() {
-  const { cartItems, isOpen, setIsOpen } = useCart()
+  const { cartItems, isOpen, setIsOpen, deleteCartItem } = useCart()
   return (
     <>
       <div className="cart" style={{ display: isOpen ? "flex" : "none" }}>
@@ -31,7 +31,7 @@ export default function Cart() {
                   <div className="card-body justify-content-between">
                     <div className="card-price">{product.price} ₽ * {product.count} = {product.price * product.count} ₽</div>
                     <h5 className="card-title">{product.title}</h5>
-                    <button className="btn btn-primary">Удалить</button>
+                    <button className="btn btn-primary" onClick={()=> deleteCartItem(product)}>Удалить</button>
                   </div>
                 </div>
               ))}
@@ -40,7 +40,7 @@ export default function Cart() {
                   <div id="cart-empty">Ваша корзина пуста</div>
                 ) : null
               }
-            <button className="btn btn-primary cart-confirm">
+            <button className="btn btn-primary cart-confirm" onClick={() => setIsOpen(false)}>
               Оформить заказ
             </button>
           </div>

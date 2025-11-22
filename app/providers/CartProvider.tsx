@@ -35,9 +35,32 @@ export default function CartProvider({ children }: { children: ReactNode }) {
             // return prev
         })
     }
+    const deleteCartItem = (product: Product) => {
+        setCartItem((prev) => {
+            const findProduct = cartItems.find(p => p.id === product.id)
+            if (findProduct) {
+                if (findProduct.count > 1) {
+                    return prev.map(p => {
+                        if (p.id === findProduct.id) {
+                          return { ...p, count: p.count-- };
+                        } else {
+                          return p;
+                        }
+                    })
+                    // return prev.filter((p) => p.id !== product.id);
+                } else {
+                    return prev.filter((p) => p.id !== product.id);
+                }
+            } else {
+                return prev
+            }
+        })
+    }
     return (
-        <CartContext.Provider value={{ isOpen, cartItems, setIsOpen, addToCart }}>
-            {children}
-        </CartContext.Provider>
+      <CartContext.Provider
+        value={{ isOpen, cartItems, setIsOpen, addToCart, deleteCartItem }}
+      >
+        {children}
+      </CartContext.Provider>
     );
 }
