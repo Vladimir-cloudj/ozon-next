@@ -2,6 +2,7 @@ import './scss/style.scss'
 import localFont from "next/font/local";
 import Header from './ui/header';
 import Cart from './ui/cart';
+import CartProvider from './providers/CartProvider';
 
 const GTEastiProText = localFont({
   src: [
@@ -30,11 +31,11 @@ export default function RootLayout({children,}: Readonly<{
         ></link>
       </head>
       <body className={GTEastiProText.className}>
-        <Header/>
-        <main>
-          {children}
-        </main>
-        <Cart/>
+        <CartProvider>
+          <Header />
+          <main>{children}</main>
+          <Cart />
+        </CartProvider>
       </body>
     </html>
   );
